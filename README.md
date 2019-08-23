@@ -18,7 +18,7 @@ While this automation script affects only the account it is run on, it might sli
 
 This automation script is a companion of the (somewhat unethical) _LOL Vs. Bots Assist_ project, from which this project takes the codebase. It focuses on simplicity in order not to clutter the source code; no configuration GUIs are created, and number of games are not tracked. Also, the script is designed to work with any game client size without having to adjust to a fixed size.
 
-The script is created to assist in completing as many games as possible by quitting and finding a new match as soon as you are eliminated. Keep in mind that the script cannot play for you, so do not expect ending up in high places with this automation.
+The script is created to assist in completing as many games as possible while you are AFK, by quitting and finding a new match as soon as you are eliminated. Keep in mind that the script cannot play for you, so do not expect ending up in high places with this automation.
 
 Before launching the script, create a Teamfight Tactics lobby first. The _Find Match_ button should be visible on the game client.
 
