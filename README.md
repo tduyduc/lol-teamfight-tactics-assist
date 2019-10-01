@@ -28,7 +28,29 @@ At any time during automation, press <kbd>Shift</kbd>+<kbd>Esc</kbd> to pause au
 
 The script attempts to quit the game as soon as possible when you are eliminated from the game, and then finds a new match when you are back to the client. If you wish to find a new match when the winner is found and all other players are eliminated, use _LOL Vs. Bots Assist_. Uncheck the _moving only_ option and start automation from a Teamfight Tactics lobby; all other settings _(even the number of games limit setting!)_ have no effect.
 
-You can also re-start automation during a Teamfight Tactics game in progress.
+You can also start or resume automation during a Teamfight Tactics game in progress.
+
+-----
+
+## Command line switches
+
+Command line switches are designed with flexibility in mind, by removing hyphens and slashes upon parsing. Both `/noff` and `--no-ff` can be used to disable _Fast Finish_ mode without being prompted with a message box. The table below shows all configurable settings as bare switches _(having "syntactic sugar" hyphens and slashed removed)_.
+
+| Bare Switch  | Description  |
+|--------------|--------------|
+| `ff`, `fastfinish` | Enable _Fast Finish_: Surrender as soon as possible. |
+| `noff`, `nofastfinish` | Disable _Fast Finish_: Quit when the player is eliminated. |
+| `move`, `moving` | Enable _Moving_: Occasionally move around the map. |
+| `nomove`, `nomoving` | Disable _Moving_: Stay stationary throughout the game; do not move the player. _(Default option)_ |
+| `emote`, `emotes` | Enable _Emotes_: Occasionally use emotes. This feature uses default key bindings for emotes: <kbd>Ctrl</kbd>+<kbd>1</kbd>, <kbd>Ctrl</kbd>+<kbd>2</kbd>, <kbd>Ctrl</kbd>+<kbd>3</kbd>, <kbd>T</kbd>. The automation script might not function properly if these key bindings are altered. |
+| `noemote`, `noemotes` | Disable _Emotes_: Stay emotionless throughout the game; do not use any emote commands. _(Default option)_ |
+
+Note that _Moving_ and _Emotes_ settings are considered _"hidden"_ because they can only be explicitly adjusted via the command line so as to avoid creating too many message boxes at launch time.
+
+Switches are parsed from left to right; that is, if there are mutually exclusive options occuring in the command line, the rightmost option is applied. For example, assuming that the path of the executable script is `D:\LOL-TeamfightTactics.exe`, this command line disables _Fast Finish_, enables _Moving_, and enables _Emotes_.
+```
+"D:\LOL-TeamfightTactics.exe" /ff --move --no-emote --no-fast-finish emotes
+```
 
 -----
 
