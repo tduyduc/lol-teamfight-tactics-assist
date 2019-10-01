@@ -687,7 +687,7 @@ Public License instead of this License.  But first, please read
 #RequireAdmin
 
 Global Const $name = "LOL Teamfight Tactics Assist"
-Global Const $about = "LOL Teamfight Tactics Assist — T.D. Stoneheart, last updated 2019/09/29"
+Global Const $about = "LOL Teamfight Tactics Assist — T.D. Stoneheart, last updated 2019/10/01"
 Global Const $copyright = "Source code form of LOL Teamfight Tactics Assist is available GNU GPLv3. © 2019 T.D. Stoneheart."
 Global Const $title = "[TITLE:League of Legends; CLASS:RCLIENT]", $title2 = "[TITLE:League of Legends (TM) Client; CLASS:RiotWindowClass]"
 Global $ff = Default, $move = Default, $emote = Default, $size = 0
