@@ -690,7 +690,7 @@ Global Const $name = "LOL Teamfight Tactics Assist"
 Global Const $about = "LOL Teamfight Tactics Assist — T.D. Stoneheart, last updated 2019/09/29"
 Global Const $copyright = "Source code form of LOL Teamfight Tactics Assist is available GNU GPLv3. © 2019 T.D. Stoneheart."
 Global Const $title = "[TITLE:League of Legends; CLASS:RCLIENT]", $title2 = "[TITLE:League of Legends (TM) Client; CLASS:RiotWindowClass]"
-Global $ff = False, $size = 0
+Global $ff = Default, $move = Default, $emote = Default, $size = 0
 TraySetToolTip("LOL Teamfight Tactics Assist — T.D. Stoneheart")
 AutoItSetOption("TrayAutoPause", 0)
 AutoItSetOption("PixelCoordMode", 2)
@@ -702,49 +702,134 @@ AutoItSetOption("SendKeyDelay", 50)
 If Not @Compiled Then AutoItSetOption("TrayIconDebug", 1)
 #EndRegion
 
-#Region Pre-Automation Steps
-MsgBox(64, $name, _ ; 64: information flag
-	$about & @CRLF & @CRLF & _
-	'Create a Teamfight Tactics lobby before starting automation.' & @CRLF & _
-	'Use Fast Finish mode to forfeit games as soon as possible.' & @CRLF & _
-	'To pause or end automation, press Shift+Esc while the game window is not active.' & @CRLF)
-Switch MsgBox(35, $name, 'Enable Fast Finish mode?') ; 32: question, 3: Yes/No/Cancel buttons
-	Case 6 ; yes
-		$ff = True
-	Case 7 ; no
-		$ff = False
-	Case Else ; cancel (-2) or close
-		Exit 0
-EndSwitch
+#Region Automation Script Sequence
+ParseCommandLine()
+About()
+PromptFastFinish()
+PromptMove()
+PromptEmote()
+MainAutomation()
 #EndRegion
 
-#Region Main Automation
-HotKeySet("+{esc}", "Terminate")
-If WinExists($title2) Then WinActivate($title2)
-While Sleep(3000)
-	GameBreaking()
-	If WinActivate($title2) Then
-		$size = WinGetClientSize($title2)
-		If Not IsArray($size) Then ContinueLoop
-		If $ff Then
-			If SendKeepActive($title2) Then Send('{lctrl down}{enter}{lctrl up}{enter}{lshift up}/{lshift down}FF{lshift up}{enter}')
-			SendKeepActive('')
-			GameClick(Round(($size[0] / 2) - ($size[1] * .1)), Round($size[1] * .5762)) ; surrender dialog box
-		EndIf
-		GameClick(Round(($size[0] / 2) - ($size[1] * .1171875)), Round($size[1] / 2)) ; game over at nth place
-		; GameClick(Round($size[0] / 2), Round($size[1] * 2 / 3)) ; victory ; this is old!
-		GameClick(Round($size[0] / 2), Round($size[1] * 0.595238)) ; victory
-	ElseIf WinActivate($title) Then
-		ClientClick(396, 547) ; create lobby, find match
-		ClientClick(509, 460) ; accept match
-		ClientClick(509, 460) ; again!
-		ClientClick(418, 286) ; reconnect
-		ClientClick(512, 315) ; message boxes
-		; ClientClick(512, 418) ; dismiss in case of post-game rewards ; this is old!
-		ClientClick(512, 543) ; dismiss in case of post-game rewards
-		ClientClick(559, 626) ; play again
+#Region Pre-Automation Functions
+Func ParseCommandLine()
+	For $i = 1 To $CmdLine[0]
+		Switch StringLower(StringRegExpReplace($CmdLine[$i], '/|-', ''))
+			Case 'ff', 'fastfinish'
+				$ff = True
+			Case 'noff', 'nofastfinish'
+				$ff = False
+			Case 'move', 'moving'
+				$move = True
+			Case 'nomove', 'nomoving'
+				$move = False
+			Case 'emote', 'emotes'
+				$emote = True
+			Case 'noemote', 'noemotes'
+				$emote = False
+		EndSwitch
+	Next
+EndFunc
+
+Func About()
+	MsgBox(64, $name, _ ; 64: information flag
+		$about & @CRLF & @CRLF & _
+		'Create a Teamfight Tactics lobby before starting automation.' & @CRLF & _
+		'Use Fast Finish mode to forfeit games as soon as possible.' & @CRLF & _
+		'To pause or end automation, press Shift+Esc while the game window is not active.' & @CRLF)
+EndFunc
+
+Func PromptFastFinish()
+	If $ff = Default Then
+		Switch MsgBox(35, $name, 'Enable Fast Finish mode?') ; 32: question, 3: Yes/No/Cancel buttons
+			Case 6 ; yes
+				$ff = True
+			Case 7 ; no
+				$ff = False
+			Case Else ; cancel (-2) or close
+				Exit 0
+		EndSwitch
 	EndIf
-WEnd
+EndFunc
+
+Func PromptMove()
+	If $move = Default Then $move = False
+EndFunc
+
+Func PromptEmote()
+	If $emote = Default Then $emote = False
+	If $emote Then MsgBox(48, $name, _ ; 48: warning
+		'The automation script will use emotes using default emote key bindings (Ctrl+1, Ctrl+2, Ctrl+3, T) ' & _
+		'and might not function correctly if those emote hot keys are altered.' & @CRLF)
+EndFunc
+#EndRegion
+
+#Region Main Automation Function
+Func MainAutomation()
+	HotKeySet("+{esc}", "Terminate")
+	If WinExists($title2) Then WinActivate($title2)
+	While Sleep(3000)
+		GameBreaking()
+		If WinActivate($title2) Then
+			$size = WinGetClientSize($title2)
+			If Not IsArray($size) Then ContinueLoop
+
+			If $move Then GameMouseClick( _
+				Round(Random($size[0] * .2, $size[0] * .8)), _
+				Round(Random($size[1] * .2, $size[1] * .8)), _
+				'menu')
+
+			If $emote Then
+				Switch Random()
+					Case .5 To 1
+						If Not $move Then ContinueCase
+						Send('^' & Random(1, 3, 1))
+					Case Else
+						GameMouseMove(Round($size[0] * .5), Round($size[1] * .5))
+						Send('{t down}')
+						Sleep(50)
+						Switch Random()
+							Case .8 To 1
+							Case .6 To .8
+								GameMouseMove(Round($size[0] * .5), Round($size[1] * .25))
+							Case .4 To .6
+								GameMouseMove(Round($size[0] * .5), Round($size[1] * .75))
+							Case .2 To .4
+								GameMouseMove(Round($size[0] * .25), Round($size[1] * .5))
+							Case .0 To .2
+								GameMouseMove(Round($size[0] * .75), Round($size[1] * .5))
+						EndSwitch
+						Sleep(100)
+						Send('{t up}')
+				EndSwitch
+			EndIf
+
+			If $ff Then
+				If SendKeepActive($title2) Then
+					Send('{lctrl down}{enter}{lctrl up}{enter}')
+					Sleep(100)
+					Send('{lshift up}/{lshift down}FF{lshift up}{enter}')
+					Sleep(100)
+				EndIf
+				SendKeepActive('')
+				GameMouseClick(Round(($size[0] / 2) - ($size[1] * .1)), Round($size[1] * .5762)) ; surrender dialog box
+			EndIf
+
+			GameMouseClick(Round(($size[0] / 2) - ($size[1] * .1171875)), Round($size[1] / 2)) ; game over at nth place
+			; GameMouseClick(Round($size[0] / 2), Round($size[1] * 2 / 3)) ; victory ; this is old!
+			GameMouseClick(Round($size[0] / 2), Round($size[1] * .595238)) ; victory
+		ElseIf WinActivate($title) Then
+			ClientClick(396, 547) ; create lobby, find match
+			ClientClick(509, 460) ; accept match
+			ClientClick(509, 460) ; again!
+			ClientClick(418, 286) ; reconnect
+			ClientClick(512, 315) ; message boxes
+			; ClientClick(512, 418) ; dismiss in case of post-game rewards ; this is old!
+			ClientClick(512, 543) ; dismiss in case of post-game rewards
+			ClientClick(559, 626) ; play again
+		EndIf
+	WEnd
+EndFunc
 #EndRegion
 
 #Region Helper Functions
@@ -755,8 +840,12 @@ Func Terminate() ; pause or quit
 	HotKeySet("+{esc}", "Terminate")
 EndFunc
 
-Func GameClick($x, $y) ; click the specific pixel in the game
-	If WinActive($title2) Then Return MouseClick("main", $x, $y, 1, 0)
+Func GameMouseMove($x, $y) ; move the mouse to the specific pixel in the game
+	If WinActive($title2) Then Return MouseMove($x, $y, 0)
+EndFunc
+
+Func GameMouseClick($x, $y, $button = 'main') ; click the specific pixel in the game
+	If WinActive($title2) Then Return MouseClick($button, $x, $y, 1, 0)
 EndFunc
 
 Func ClientClick($x, $y) ; click an area of the League Client, proportional to client size
