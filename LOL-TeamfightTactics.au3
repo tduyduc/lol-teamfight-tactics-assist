@@ -680,14 +680,14 @@ Public License instead of this License.  But first, please read
 #pragma compile(ExecLevel, requireAdministrator)
 #pragma compile(Compression, 9)
 #pragma compile(UPX, False)
-#pragma compile(Icon, 'League of Legends_100.ico')
 #pragma compile(CompanyName, 'T.D. Stoneheart')
 #pragma compile(LegalCopyright, '© 2019 T.D. Stoneheart')
 #pragma compile(ProductName, 'LOL Teamfight Tactics Assist')
+; #pragma compile(Icon, 'League of Legends_100.ico')
 #RequireAdmin
 
 Global Const $name = "LOL Teamfight Tactics Assist"
-Global Const $about = "LOL Teamfight Tactics Assist — T.D. Stoneheart, last updated 2019/10/01"
+Global Const $about = "LOL Teamfight Tactics Assist — T.D. Stoneheart, last updated 2019/10/31"
 Global Const $copyright = "Source code form of LOL Teamfight Tactics Assist is available GNU GPLv3. © 2019 T.D. Stoneheart."
 Global Const $title = "[TITLE:League of Legends; CLASS:RCLIENT]", $title2 = "[TITLE:League of Legends (TM) Client; CLASS:RiotWindowClass]"
 Global $ff = Default, $move = Default, $emote = Default, $size = 0
@@ -857,7 +857,11 @@ EndFunc
 Func GameBreaking() ; dismiss all game error dialog boxes
 	ControlClick("[TITLE:League of Legends; CLASS:#32770", _
 			"You are trying to open the League of Legends game client in an invalid way.", "Button1", "main")
+	ControlClick("[TITLE:Cảnh báo kết nối; CLASS:#32770]", "Bạn đã ngắt kết nối.", "Button1", "main")
+	ControlClick("[TITLE:Network Warning; CLASS:#32770]", "You have disconnected.", "Button1", "main")
 	ControlClick("[TITLE:Kết nối thất bại; CLASS:#32770]", "Không thể kết nối đến máy chủ.", "Button2", "main")
+	ControlClick("[TITLE:Failed to Connect; CLASS:#32770]", "Unable to connect to the server.", "Button2", "main")
+	ControlClick("[TITLE:Error; CLASS:#32770]", "irectX", "Button1", "main") ; DirectX
 	ControlClick("[TITLE:Connection failed; CLASS:#32770]", "", "Button2", "main")
 	ControlClick("[TITLE:Woops! Something broke.; CLASS:#32770]", "A problem has caused your program to close.", _
 			"Button2", "main") ; BugSplat, Don't Send
