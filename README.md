@@ -34,7 +34,7 @@ You can also start or resume automation during a Teamfight Tactics game in progr
 
 ## Command line switches
 
-Command line switches are designed with flexibility in mind, by removing hyphens and slashes upon parsing. Both `/noff` and `--no-ff` can be used to disable _Fast Finish_ mode without being prompted with a message box. The table below shows all configurable settings as bare switches _(having "syntactic sugar" hyphens and slashed removed)_.
+Command line switches are designed with flexibility in mind, by removing hyphens and slashes upon parsing. Both `/noff` and `--no-ff` can be used to disable _Fast Finish_ mode without being prompted with a message box. The table below shows all configurable settings as bare switches _(having "syntactic sugar" hyphens and slashes removed)_.
 
 | Bare Switch  | Description  |
 |--------------|--------------|
