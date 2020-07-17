@@ -1,4 +1,4 @@
-; LOL Teamfight Tactics Assist © 2019 T.D. Stoneheart. Some rights reserved. Source code available under GPLv3 license.
+; LOL Teamfight Tactics Assist © 2019–2020 T.D. Stoneheart. All rights reserved. Source code available under GPLv3 license.
 #cs
                      GNU GENERAL PUBLIC LICENSE
                        Version 3, 29 June 2007
@@ -681,14 +681,14 @@ Public License instead of this License.  But first, please read
 #pragma compile(Compression, 9)
 #pragma compile(UPX, False)
 #pragma compile(CompanyName, 'T.D. Stoneheart')
-#pragma compile(LegalCopyright, '© 2019 T.D. Stoneheart')
+#pragma compile(LegalCopyright, '© 2020 T.D. Stoneheart')
 #pragma compile(ProductName, 'LOL Teamfight Tactics Assist')
 ; #pragma compile(Icon, 'League of Legends_100.ico')
 #RequireAdmin
 
 Global Const $name = "LOL Teamfight Tactics Assist"
-Global Const $about = "LOL Teamfight Tactics Assist — T.D. Stoneheart, last updated 2019/10/31"
-Global Const $copyright = "Source code form of LOL Teamfight Tactics Assist is available GNU GPLv3. © 2019 T.D. Stoneheart."
+Global Const $about = "LOL Teamfight Tactics Assist — T.D. Stoneheart, last updated 2020/07/17"
+Global Const $copyright = "Source code form of LOL Teamfight Tactics Assist is available GNU GPLv3. © 2019–2020 T.D. Stoneheart."
 Global Const $title = "[TITLE:League of Legends; CLASS:RCLIENT]", $title2 = "[TITLE:League of Legends (TM) Client; CLASS:RiotWindowClass]"
 Global $ff = Default, $move = Default, $emote = Default, $size = 0
 TraySetToolTip("LOL Teamfight Tactics Assist — T.D. Stoneheart")
@@ -812,7 +812,8 @@ Func MainAutomation()
 					Sleep(100)
 				EndIf
 				SendKeepActive('')
-				GameMouseClick(Round(($size[0] / 2) - ($size[1] * .1)), Round($size[1] * .5762)) ; surrender dialog box
+				; GameMouseClick(Round(($size[0] / 2) - ($size[1] * .1)), Round($size[1] * .5762)) ; surrender dialog box ; this is old!
+				GameMouseClick(Round(($size[0] / 2) + ($size[1] * .1)), Round($size[1] * .45)) ; surrender dialog box
 			EndIf
 
 			GameMouseClick(Round(($size[0] / 2) - ($size[1] * .1171875)), Round($size[1] / 2)) ; game over at nth place
