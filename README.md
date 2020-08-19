@@ -2,7 +2,7 @@
 
 _Automation for League of Legends' Teamfight Tactics game mode_
 
-_© 2019 T.D. Stoneheart. Some rights reserved. Source code available under GPLv3 license._
+_© 2019–2020 T.D. Stoneheart. All rights reserved. Source code available under GPLv3 license._
 
 -----
 
