@@ -20,6 +20,8 @@ This automation script is a companion of the (somewhat unethical) _LOL Vs. Bots 
 
 The script is created to assist in completing as many games as possible while you are AFK, by quitting and finding a new match as soon as you are eliminated. Keep in mind that the script cannot play for you, so do not expect ending up in high places with this automation.
 
+A demonstration video can be found [here](https://www.youtube.com/watch?v=wVgEQexeYB0).
+
 Before launching the script, create a Teamfight Tactics lobby first. The _Find Match_ button should be visible on the game client.
 
 Prior to automation, you will be able to choose to enable _Fast Finish_ mode or not to. When _Fast Finish_ is enabled, the script attempts to forfeit _(or surrender, or finish fast)_ games as soon as possible. Surrendering is available when the game has elapsed for at least 10 minutes, typically from round 3-1 onward.
