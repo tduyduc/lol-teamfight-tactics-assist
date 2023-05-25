@@ -1,4 +1,4 @@
-; LOL Teamfight Tactics Assist © 2019–2020 T.D. Stoneheart. All rights reserved. Source code available under GPLv3 license.
+; LOL Teamfight Tactics Assist © 2019–2023 T.D. Stoneheart. All rights reserved. Source code available under GPLv3 license.
 #cs
                      GNU GENERAL PUBLIC LICENSE
                        Version 3, 29 June 2007
@@ -677,18 +677,16 @@ Public License instead of this License.  But first, please read
 #ce
 
 #Region Directives & Initialization
-#pragma compile(ExecLevel, requireAdministrator)
 #pragma compile(Compression, 9)
 #pragma compile(UPX, False)
 #pragma compile(CompanyName, 'T.D. Stoneheart')
-#pragma compile(LegalCopyright, '© 2020 T.D. Stoneheart')
+#pragma compile(LegalCopyright, '© 2023 T.D. Stoneheart')
+#pragma compile(ProductVersion, 2023.05.24.0)
 #pragma compile(ProductName, 'LOL Teamfight Tactics Assist')
-; #pragma compile(Icon, 'League of Legends_100.ico')
-#RequireAdmin
 
 Global Const $name = "LOL Teamfight Tactics Assist"
-Global Const $about = "LOL Teamfight Tactics Assist — T.D. Stoneheart, last updated 2020/08/19"
-Global Const $copyright = "Source code form of LOL Teamfight Tactics Assist is available GNU GPLv3. © 2019–2020 T.D. Stoneheart."
+Global Const $about = "LOL Teamfight Tactics Assist — T.D. Stoneheart, last updated 2023/05/24"
+Global Const $copyright = "Source code form of LOL Teamfight Tactics Assist is available GNU GPLv3. © 2019–2023 T.D. Stoneheart."
 Global Const $title = "[TITLE:League of Legends; CLASS:RCLIENT]", $title2 = "[TITLE:League of Legends (TM) Client; CLASS:RiotWindowClass]"
 Global $ff = Default, $move = Default, $emote = Default, $size = 0
 TraySetToolTip("LOL Teamfight Tactics Assist — T.D. Stoneheart")
@@ -818,12 +816,11 @@ Func MainAutomation()
 			GameMouseClick(Round(($size[0] / 2) - ($size[1] * .1171875)), Round($size[1] / 2)) ; game over at nth place
 			GameMouseClick(Round($size[0] / 2), Round($size[1] * .595238)) ; victory
 		ElseIf WinActivate($title) Then
-			ClientClick(396, 547) ; create lobby, find match
+			ClientClick(492, 547) ; create lobby, find match, dismiss post-game rewards
 			ClientClick(509, 460) ; accept match
 			ClientClick(509, 460) ; again!
 			ClientClick(418, 286) ; reconnect
 			ClientClick(512, 315) ; message boxes
-			ClientClick(512, 543) ; dismiss in case of post-game rewards
 			ClientClick(559, 626) ; play again
 		EndIf
 	WEnd
